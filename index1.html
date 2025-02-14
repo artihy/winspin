@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Колесо удачи</title>
+    <style>
+        body {
+            background: url('фОН.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .left-section {
+            margin-bottom: 20px;
+        }
+        .wheel-container {
+            width: 60%; /* Уменьшаем размер колеса на мобильных устройствах */
+            max-width: 500px; /* Ограничиваем максимальный размер */
+            height: 60%; /* Уменьшаем высоту колеса */
+            max-height: 500px; /* Ограничиваем максимальную высоту */
+            position: relative;
+        }
+        .wheel {
+            width: 100%;
+            height: 100%;
+            transition: transform 4s ease-out;
+        }
+        .button {
+            padding: 12px 24px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #ff9900;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #cc7a00;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        /* Медиазапросы для мобильных устройств */
+        @media screen and (max-width: 600px) {
+            .button {
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+            #result {
+                font-size: 16px;
+            }
+            .wheel-container {
+                width: 80%; /* Увеличиваем размер колеса на мобильных устройствах */
+                height: 80%; /* Соответственно увеличиваем высоту */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <button class="button" onclick="spinWheel()">Старт</button>
+            <p id="result"></p>
+        </div>
+        <div class="wheel-container">
+            <img id="wheel" class="wheel" src="колесо.png" alt="Колесо удачи">
+        </div>
+    </div>
+
+    <script>
+        function spinWheel() {
+            const wheel = document.getElementById("wheel");
+            const resultText = document.getElementById("result");
+            const button = document.querySelector(".button");
+
+            button.disabled = true; // Деактивируем кнопку
+
+            const prizes = ["Подарок", "7%", "14%", "8%", "13%", "10%", "11%", "9%", "12%", "15%"];
+            const randomIndex = Math.floor(Math.random() * prizes.length);
+            const degrees = 3600 + (randomIndex * 36); // 10 секторов по 36 градусов
+
+            wheel.style.transform = `rotate(${degrees}deg)`;
+
+            setTimeout(() => {
+                resultText.textContent = "Ваш приз: " + prizes[randomIndex];
+                button.disabled = false; // Включаем кнопку обратно
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
